@@ -1,36 +1,29 @@
-import fs from "fs";
-import path from "path";
-import Papa from "papaparse";
+import fs from 'fs';
+import path from 'path';
+import Papa from 'papaparse';
 
 export async function POST(req) {
   const input = await req.json();
 
-  // Load CSV file from /public
-  const filePath = path.join(process.cwd(), "public/drg_table.csv");
-  const csvFile = fs.readFileSync(filePath, "utf8");
+  // 1. Read files from the PUBLIC folder correctly for Vercel
+  const filePath = path.join(process.cwd(), "public", "coefficients.csv");
+  const fileContent = fs.readFileSync(filePath, "utf8");
+  
+  const { data: coeffs } = Papa.parse(fileContent, { header: true });
 
-  const drgTable = Papa.parse(csvFile, {
-    header: true,
-    dynamicTyping: true,
-  }).data;
+  // 2. Lasso Logic: Start with the Intercept
+  let predictedValue = parseFloat(coeffs.find(c => c.Predictor === '(Intercept)').Estimate);
 
-  // Find matching DRG row
-  const match = drgTable.find(
-    (r) =>
-      r.hospital_type === input.hospital_type &&
-      r.major_category === input.major_category &&
-      r.sub_category === input.sub_category &&
-      r.los_tier === input.los_tier
-  );
+  // 3. Add demographic impacts (example: Age)
+  const ageCoeff = parseFloat(coeffs.find(c => c.Predictor === 'patient_age')?.Estimate || 0);
+  predictedValue += (input.age * ageCoeff);
 
-  if (!match) {
-    return Response.json({
-      error: "No DRG match found",
-    });
-  }
+  // 4. Implement the Base MHIT Copayment Logic (20% cap RM3000)
+  const copay = Math.min(predictedValue * 0.20, 3000);
 
-  return Response.json({
-    prediction: match.Expected_Claim_Amount,
-    drg: match.Clinical_DRG,
+  return Response.json({ 
+    total_claim: predictedValue.toFixed(2),
+    patient_responsibility: copay.toFixed(2),
+    status: "Success"
   });
 }
