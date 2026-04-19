@@ -1,0 +1,42 @@
+"variable","coefficient"
+"(Intercept)",9.13893785677907
+"patient_age_cleaned",0.000514340691333376
+"patient_genderM",0
+"smoker_statusSmoker",0.217240797273811
+"chronic_conditions",0.118077753829682
+"has_previous_claims_cleanedTRUE",0
+"major_categoryObstetrics",0.116215704471811
+"major_categorySurgical",1.44085918468014
+"sub_categoryInfectious",-0.234147127352827
+"sub_categoryMaternity",0.00616697787011375
+"sub_categoryOrthopedic",-0.298538088411364
+"sub_categoryRespiratory",0
+"hospital_typePrivate",1.21516139861318
+"admission_typeEmergency",0
+"patient_stateKedah",0
+"patient_stateKelantan",0
+"patient_stateKuala Lumpur",0.144373078813076
+"patient_stateLabuan",0
+"patient_stateMelaka",0
+"patient_stateNegeri Sembilan",0.0019512246258116
+"patient_statePahang",0
+"patient_statePenang",0
+"patient_statePerak",0
+"patient_statePerlis",0
+"patient_statePutrajaya",0.149557453501673
+"patient_stateSabah",0
+"patient_stateSarawak",0
+"patient_stateSelangor",0.149736956426002
+"patient_stateTerengganu",0
+"regionEast Coast",-0.0493592515857241
+"regionEast Malaysia",-0.083475861601579
+"regionNorthern",0
+"regionSouthern",0.0374053001864777
+"plan_typeSilver",0
+"plan_typeGold",0
+"plan_typePlatinum",0
+"bmi_tierObese",0.0258451495020193
+"bmi_tierOverweight",-0.00107364741809081
+"bmi_tierUnderweight",0.00864895142136894
+"los_tierShortStay",-0.368488177921319
+"los_tierStandardAdmit",-0.176423883534961
